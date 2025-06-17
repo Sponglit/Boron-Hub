@@ -1,0 +1,204 @@
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua'))()
+local Window = Library.CreateLib('BORON HUB', 'Ocean')
+local name, version = identifyexecutor()
+local hubVersion = '0.0.0'
+local userName = game.Players.LocalPlayer.Name
+local lightThing = game:GetService('Lighting')
+local defaultBrightness = lightThing.Brightness
+local defaultClockTime = lightThing.ClockTime
+local defaultFogEnd = lightThing.FogEnd
+local defaultGlobalShadows = lightThing.GlobalShadows
+local defaultOutdoorAmbient = lightThing.OutdoorAmbient
+local placeID= game.PlaceId
+local playerServiceIThink = game:GetService("Players")
+local teleportService = game:GetService("TeleportService")
+local httpServiceRoblox = game:GetService("HttpService")
+local JobId = game.JobId
+
+
+
+
+
+
+-- HOME PAGE --
+
+local homeTab = Window:NewTab('Home')
+local clientInfo = homeTab:NewSection('Client Info:')
+clientInfo:NewLabel('Username: ' .. userName)
+clientInfo:NewLabel('Executor: ' .. name)
+clientInfo:NewLabel('Version: ' .. version)
+clientInfo:NewLabel('BORON HUB Version: ' .. hubVersion)
+
+-- force leave
+clientInfo:NewButton('Force Leave','Makes you leave whatever game you are in.',function()
+    game:Shutdown()
+end)
+
+-- force leave2
+clientInfo:NewButton('Force Leave 2','For some reason if the first one did not work this probaly will.',function()
+    playerServiceIThink.LocalPlayer:Kick("U clicked da force leave 2 button congrats!!!!")
+end)
+
+-- UNC test
+clientInfo:NewButton('UNC Test','Runs a UNC test inside of the console.',function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua',true))()
+end)
+
+--Rejoin
+clientInfo:NewButton('Rejoin','Rejoins the server you are currently in.',function()
+    --playerServiceIThink.LocalPlayer:Kick("Rejoining...")
+    --wait()
+    --teleportService:Teleport(placeID, playerServiceIThink.LocalPlayer)
+
+    if #playerServiceIThink:GetPlayers() <= 1 then
+		playerServiceIThink.LocalPlayer:Kick("Rejoining...")
+		wait()
+		teleportService:Teleport(placeID, playerServiceIThink.LocalPlayer)
+	else
+		teleportService:TeleportToPlaceInstance(placeID, JobId, playerServiceIThink.LocalPlayer)
+	end
+    
+end)
+
+--Serverhop
+clientInfo:NewButton('Server Hop','Joins you into a new server of the same game you are currently playing.',function()
+    local servers = {}
+    local req = game:HttpGet("https://games.roblox.com/v1/games/" .. placeID .. "/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true")
+    local body = httpServiceRoblox:JSONDecode(req)
+
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                table.insert(servers, 1, v.id)
+            end
+        end
+    end
+
+    if #servers > 0 then
+        teleportService:TeleportToPlaceInstance(placeID, servers[math.random(1, #servers)], playerServiceIThink.LocalPlayer)
+    else
+        warn("Could not find an avaliable server to hop to.")
+    end
+end)
+
+clientInfo:NewToggle("Anti AFK", "Makes your character do stuff every 19 minutes.", function(state)
+    if state then
+        playerServiceIThink.LocalPlayer.Character:Jump()
+    else
+        print("Toggle Off")
+    end
+end)
+
+-- UNIVERSAL --
+local universalTab = Window:NewTab('Universal Admin')
+local adminHubs = universalTab:NewSection('Admin Scripts:')
+local commandPanel = universalTab:NewSection('Admin Panel:')
+
+
+-- inf yeild
+adminHubs:NewButton('Infinite Yield','Runs Infinite Yield an alternitive admin panel.',function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end)
+
+adminHubs:NewButton('Bypasser', 'Loads chat filter bypasser.', function()
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/Synergy-Networks/products/main/BetterBypasser/loader.lua",true))()
+end)
+
+commandPanel:NewTextBox('Walk Speed','Changes the speed of your character.',function(ws)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = ws
+    end)
+
+commandPanel:NewTextBox('Jump Power','Changes the jump power of your character.', function(jp)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = jp
+    end)
+
+
+commandPanel:NewToggle("Full Brightness", "Sets the brightness to 5.", function(state)
+    if state then
+        lightThing.Brightness = 2
+	    lightThing.ClockTime = 14
+	    lightThing.FogEnd = 100000
+	    lightThing.GlobalShadows = false
+	    lightThing.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    else
+        lightThing.Brightness = defaultBrightness
+        lightThing.ClockTime = defaultClockTime
+        lightThing.FogEnd = defaultFogEnd
+        lightThing.GlobalShadows = defaultGlobalShadows
+        lightThing.OutdoorAmbient = defaultOutdoorAmbient
+    end
+end)
+
+
+
+
+-- ANIMATIONS --
+
+local animationTab = Window:NewTab('Animations')
+local animationHubs = animationTab:NewSection('Animations Panels:')
+local animationHub = animationTab:NewSection('Animations:')
+
+animationHubs:NewButton('SCP-096', 'Lets you act like SCP-096.', function()
+     loadstring(game:HttpGet('https://pastefy.app/YsJgITXR/raw'))()
+
+end)
+
+animationHubs:NewButton('Aqua Matrix (R6 ONLY)', 'Loads AquaMatrix FE R6 Animations.', function()
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/ExploitFin/AquaMatrix/refs/heads/AquaMatrix/AquaMatrix"))()
+
+end)
+
+animationHubs:NewButton('Flips', 'Z - Front flip, X Back flip, C - Infinite jump.', function()
+     loadstring(game:HttpGet('https://pastebin.com/raw/xi23b40Y'))()
+end)
+
+
+animationHub:NewDropdown('Jerk It',"in the stripped club. straight up jorking it. and by it, haha, well. let's just say. My peanits",{ 'R15 Jerk', 'R6 Jerk' },function(jerkOption)
+        if jerkOption == 'R6 Jerk' then
+            loadstring(game:HttpGet('https://pastefy.app/wa3v2Vgm/raw'))()
+        elseif jerkOption == 'R15 Jerk' then
+            loadstring(game:HttpGet('https://pastefy.app/YZoglOyJ/raw'))()
+        end
+end)
+
+-- DEBUG --
+local debugTab = Window:NewTab("Debug")
+local commandTests = debugTab:NewSection("Command Tests")
+
+commandTests:NewButton("Noclip", "Debug for noclip activation.", function()
+	
+end)
+
+-- Arsenal --
+
+if game.PlaceId == 286090429 then
+    local arsenalTab = Window:NewTab('Arsenal')
+    local arsenalHubs = arsenalTab:NewSection('Seperate Arsenal Panels:')
+
+    arsenalHubs:NewButton("Vapa v2 (RECCOMENDED)", "Loads Vapa v2", function()
+	    loadstring(game:HttpGet('https://raw.githubusercontent.com/Nickyangtpe/Vapa-v2/refs/heads/main/Vapav2-Arsenal.lua',true))()
+    end)
+
+    arsenalHubs:NewButton("@RobloxScriptsFree1's Hub", "Loads an arsenal hub by @RobloxScriptsFree1", function()
+	    loadstring(game:HttpGet("https://pastebin.com/raw/5mPuFxWz"))()
+    end)
+end
+
+-- BLADE BALL --
+
+if game.PlaceId == 16281300371 or game.PlaceId == 15144787112 then
+     local bladeBallTab = Window:NewTab('Blade Ball')
+    local bladeBallPanels = bladeBallTab:NewSection('Blade Ball Panels:')
+
+bladeBallPanels:NewButton("Soluna", "Loads Soluna a good bladeball panel and keyless.", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Patheticcs/Soluna-API/refs/heads/main/bladeball.lua",true))()
+end)
+
+bladeBallPanels:NewButton("FFJ Hub", "Loads FFJ Hub probaly one of the best blade ball hubs.", function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/FFJ1/Roblox-Exploits/main/scripts/Loader.lua"))()
+end)
+
+end
+
+
+
