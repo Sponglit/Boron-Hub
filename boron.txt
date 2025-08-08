@@ -162,12 +162,12 @@ animationHub:NewDropdown('Jerk It',"in the stripped club. straight up jorking it
 end)
 
 -- DEBUG --
-local debugTab = Window:NewTab("Debug")
-local commandTests = debugTab:NewSection("Command Tests")
+--local debugTab = Window:NewTab("Debug")
+--local commandTests = debugTab:NewSection("Command Tests")
 
-commandTests:NewButton("Noclip", "Debug for noclip activation.", function()
+--commandTests:NewButton("Noclip", "Debug for noclip activation.", function()
 	
-end)
+--end)
 
 -- Arsenal --
 
@@ -202,15 +202,14 @@ end
 
 -- Shout sim --
 
-if game.PlaceId == 6479909373 then
+if game.PlaceId == 15577955395 then
     local shoutSimTab = Window:NewTab('Shout Sim')
     local shoutSimSection = arsenalTab:NewSection('Seperate Arsenal Panels:')
 
     shoutSimSection:NewButton("BORON shout script", "Only works in the last area", function()
-	    loadstring(game:HttpGet(“https://raw.githubusercontent.com/Sponglit/ScriptsMade/refs/heads/main/ShoutingSim2Remake”))()
+	    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sponglit/ScriptsMade/refs/heads/main/ShoutingSim2Remake"))()
     end)
 end
-
 
 
 
