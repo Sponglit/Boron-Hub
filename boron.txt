@@ -1,7 +1,7 @@
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua'))()
 local Window = Library.CreateLib('BORON HUB', 'Ocean')
 local name, version = identifyexecutor()
-local hubVersion = '0.0.0'
+local hubVersion = '1.0.0'
 local userName = game.Players.LocalPlayer.Name
 local lightThing = game:GetService('Lighting')
 local defaultBrightness = lightThing.Brightness
@@ -210,6 +210,7 @@ if game.PlaceId == 15577955395 then
 	    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sponglit/ScriptsMade/refs/heads/main/ShoutingSim2Remake"))()
     end)
 end
+
 
 
 
