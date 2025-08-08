@@ -200,5 +200,17 @@ end)
 
 end
 
+-- Shout sim --
+
+if game.PlaceId == 6479909373 then
+    local shoutSimTab = Window:NewTab('Shout Sim')
+    local shoutSimSection = arsenalTab:NewSection('Seperate Arsenal Panels:')
+
+    shoutSimSection:NewButton("BORON shout script", "Only works in the last area", function()
+	    loadstring(game:HttpGet(“https://raw.githubusercontent.com/Sponglit/ScriptsMade/refs/heads/main/ShoutingSim2Remake”))()
+    end)
+end
+
+
 
 
